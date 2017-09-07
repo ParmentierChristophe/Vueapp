@@ -12,40 +12,42 @@
         <form class="">
 
           <div class="form-input">
-            <input class="form-style" v-validate="'required|alpha_num|min:3'" type="text" name="pseudo" placeholder="Votre pseudo" v-model="pseudo" />
+            <input class="title form-style" v-validate="'required|alpha_num|min:3'" type="text" name="pseudo" placeholder="Votre pseudo" v-model="pseudo" required/>
             <p class="title is-6 has-text-white-bis" v-if="errors.has('pseudo')">{{ errors.first('pseudo') }}</p>
 
           </div>
 
           <div class="form-input">
-            <input class="form-style" v-validate="'required|email'" type="email" name="email" placeholder="Votre Email" v-model.trim="email" />
+            <input class="title form-style" v-validate="'required|email'" type="email" name="email" placeholder="Votre Email" v-model.trim="email" required />
             <p class="title is-6 has-text-white-bis" v-if="errors.has('email')">{{ errors.first('email') }}</p>
           </div>
 
           <div class="form-input">
-            <input class="form-style" v-validate="'required|min:8'" type="password" name="password" placeholder="Votre mot de passe" v-model="password" />
+            <input class="title form-style" v-validate="'required|min:8'" type="password" name="password" placeholder="Votre mot de passe" v-model="password" required />
             <p class="title is-6 has-text-white-bis" v-if="errors.has('password')">{{ errors.first('password') }}</p>
           </div>
 
           <div class="form-input">
-            <input class="form-style" v-validate="'required|min:8|confirmed:password'" type="password" name="password_confirmation" placeholder="Confirmer votre mot de passe" v-model="password_confirmation" />
+            <input class="title form-style" v-validate="'required|min:8|confirmed:password'" type="password" name="password_confirmation" placeholder="Confirmer votre mot de passe" v-model="password_confirmation" required/>
             <p class="title is-6 has-text-white-bis" v-if="errors.has('password_confirmation')">{{ errors.first('password_confirmation') }}</p>
           </div>
 
           <div class="form-input">
 
-            <a type="submit" class="btn is-large button " @click.prevent="register" :class="{ 'is-loading': isload}">S'enregistrer</a>
+            <a type="submit" class="title btn is-large button " @click.prevent="register" :class="{ 'is-loading': isload}">S'enregistrer</a>
           </div>
 
-          <div class="form-input" v-if="hasErrors">
-            <p class="title is-6 has-text-white-bis" v-for="fail in fails">{{ fail }}</p>
-          </div>
+
 
           <div class="form-input">
 
-            <p class="form-link">Déjà enregistrer ?
+            <p class="subtitle is-6 form-link">Déjà enregistrer ?
               <router-link class="link" to="/login">Se connecter</router-link>
             </p>
+          </div>
+
+          <div class="box" v-if="hasErrors">
+            <p class="title is-6 has-text-danger" v-for="fail in fails">{{ fail }}</p>
           </div>
 
         </form>
@@ -154,10 +156,16 @@ export default {
   margin: 0 0 15px;
 }
 
+.box {
+  max-width: 340px;
+  margin: 0 auto;
+}
+
 .form-style {
   display: block;
   width: 100%;
   height: 46px;
+  margin-bottom: 5px;
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.4;
@@ -186,10 +194,11 @@ export default {
 
 .btn:hover {
   opacity: 0.8;
+
 }
 
 .form-link {
-  color: #d0d6db;
+  color: # ;
 }
 
 .link {
