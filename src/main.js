@@ -4,9 +4,20 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import firebase from 'firebase'
+import french from 'vee-validate/dist/locale/fr'
+import VeeValidate, { Validator } from 'vee-validate'
+import store from './store'
+
 
 
 Vue.config.productionTip = false
+
+Validator.addLocale(french);
+
+Vue.use(VeeValidate, {
+  locale: 'fr'
+});
+
 
 let config = {
   apiKey: "AIzaSyBctiJjorT7vhRoakR2ygCxXwKPwyNGGDU",
@@ -24,6 +35,7 @@ window.firebase = firebase
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })

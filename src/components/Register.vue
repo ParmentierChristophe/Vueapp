@@ -12,24 +12,33 @@
         <form class="">
 
           <div class="form-input">
-            <input class="form-style" type="text" name="name" placeholder="Votre pseudo" v-model.trim="name" />
+            <input class="form-style" v-validate="'required|alpha_num|min:3'" type="text" name="pseudo" placeholder="Votre pseudo" v-model="pseudo" />
+            <p class="title is-6 has-text-white-bis" v-if="errors.has('pseudo')">{{ errors.first('pseudo') }}</p>
+
           </div>
 
           <div class="form-input">
-            <input class="form-style" type="email" name="email" placeholder="Votre Email" v-model.trim="email" />
+            <input class="form-style" v-validate="'required|email'" type="email" name="email" placeholder="Votre Email" v-model.trim="email" />
+            <p class="title is-6 has-text-white-bis" v-if="errors.has('email')">{{ errors.first('email') }}</p>
           </div>
 
           <div class="form-input">
-            <input class="form-style" type="password" name="password" placeholder="Votre mot de passe" v-model="password" />
+            <input class="form-style" v-validate="'required|min:8'" type="password" name="password" placeholder="Votre mot de passe" v-model="password" />
+            <p class="title is-6 has-text-white-bis" v-if="errors.has('password')">{{ errors.first('password') }}</p>
           </div>
 
           <div class="form-input">
-            <input class="form-style" type="password" name="password_confirmation" placeholder="Confirmer votre mot de passe" v-model="password_confirmation" />
+            <input class="form-style" v-validate="'required|min:8|confirmed:password'" type="password" name="password_confirmation" placeholder="Confirmer votre mot de passe" v-model="password_confirmation" />
+            <p class="title is-6 has-text-white-bis" v-if="errors.has('password_confirmation')">{{ errors.first('password_confirmation') }}</p>
           </div>
 
           <div class="form-input">
 
-            <button class="btn" @click.prevent="register">S'enregistrer</button>
+            <a type="submit" class="btn is-large button " @click.prevent="register" :class="{ 'is-loading': isload}">S'enregistrer</a>
+          </div>
+
+          <div class="form-input" v-if="hasErrors">
+            <p class="title is-6 has-text-white-bis" v-for="fail in fails">{{ fail }}</p>
           </div>
 
           <div class="form-input">
@@ -48,25 +57,74 @@
 </template>
 
 <script>
+import md5 from 'md5'
+
 export default {
   name: 'register',
+
+
   data() {
     return {
-      name: '',
+      pseudo: '',
       email: '',
       password: '',
-      password_confirmation: ''
+      password_confirmation: '',
+      locale: 'fr',
+      fails: [],
+      usersRef: firebase.database().ref('users'),
+      isload: false
+    }
+  },
+  computed: {
+    hasErrors() {
+      return this.fails.length > 0
     }
   },
   methods: {
-    register() {
-      firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(user => {
-        console.log('utilisateur inscrit' + user.email);
 
-      }).catch(error => {
-        console.log(error);
+    register() {
+      this.fails = [];
+      this.$validator.validateAll().then((res) => {
+        if (res) {
+          this.isload = true
+          firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(user => {
+            console.log('utilisateur inscrit ' + user.email);
+
+
+            user.updateProfile({
+              displayName: this.pseudo,
+              photoURL: "http://www.gravatar.com/avatar/" + md5(user.email) + "?d=identicon"
+            }).then(() => {
+              this.saveUserToUsersRef(user).then(() => {
+                this.$store.dispatch('setUser', user)
+                this.$router.push('/')
+              })
+            }).catch(error => {
+              this.fails.push(error.message)
+              this.isload = false
+              console.log(error);
+            })
+          }).catch(error => {
+            this.fails.push(error.message)
+            this.isload = false
+            console.log(error);
+
+
+
+          })
+        }
+
       })
+    },
+    saveUserToUsersRef(user) {
+      return this.usersRef.child(user.uid).set({
+        name: user.displayName,
+        avatar: user.photoURL
+      })
+
     }
+
+
   }
 
 }
@@ -74,7 +132,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 .img {
   width: 100%;
   text-align: center;
@@ -124,6 +181,7 @@ export default {
   width: 100%;
   cursor: pointer;
   transition: 0.5s;
+  height: 65px;
 }
 
 .btn:hover {
@@ -135,14 +193,14 @@ export default {
 }
 
 .link {
-  font-weight:500;
-  color: #a84342;
+  font-weight: 500;
+  color: #411b1a;
   -webkit-transition: 0.5s;
   /* Safari */
   transition: 0.5s;
 }
 
 .link:hover {
-  color: #992623;
+  color: #fff;
 }
 </style>
