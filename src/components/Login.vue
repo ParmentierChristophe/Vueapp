@@ -9,7 +9,7 @@
 
           <img class="logo" src="../assets/crispy.png" alt="">
         </div>
-        <form class="">
+        <form @keyup.enter="login" class="">
 
 
 

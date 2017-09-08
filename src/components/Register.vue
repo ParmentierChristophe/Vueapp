@@ -9,7 +9,7 @@
 
           <img class="logo" src="../assets/crispy.png" alt="">
         </div>
-        <form class="">
+        <form @keyup.enter="register" class="">
 
           <div class="form-input">
             <input class="title form-style" v-validate="'required|alpha_num|min:3'" type="text" name="pseudo" placeholder="Votre pseudo" v-model="pseudo" required/>
