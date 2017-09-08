@@ -1,49 +1,26 @@
 <template>
-<div class="register">
- <p>ah ah ah</p>
-
+<div class="home">
+  <sidebar></sidebar>
 </div>
 </template>
 
 <script>
-import md5 from 'md5'
+import Sidebar from './sidebar'
 
 export default {
-  name: 'register',
+  name: 'home',
 
+  components: {
+    Sidebar
+  },
 
   data() {
     return {
-      email: '',
-      password: '',
-      locale: 'fr',
-      fails: [],
-      usersRef: firebase.database().ref('users'),
-      isload: false
-    }
-  },
-  computed: {
-    hasErrors() {
-      return this.fails.length > 0
-    }
-  },
-  methods: {
-    login() {
-      this.fails = [];
-      this.$validator.validateAll().then((res) => {
-        this.isload = true
-        firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(user => {
-          this.$store.dispatch('setUser', user)
-          this.$router.push('/')
 
-        }).catch(error => {
-          this.fails.push(error.message)
-          this.isload = false
-          console.log(error);
-        })
-      })
     }
-  }
+  },
+
+  methods: {}
 }
 </script>
 
@@ -109,11 +86,10 @@ export default {
 
 .btn:hover {
   opacity: 0.8;
-
 }
 
 .form-link {
-  color: # ;
+  color: #;
 }
 
 .link {

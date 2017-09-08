@@ -19,7 +19,16 @@ export default new Router({
     },
     {
       path: '/',
-      component: Home
+      component: Home,
+      beforeEnter: (to, from, next) => {
+        if (!firebase.auth().currentUser) {
+          next('login')
+
+        }else {
+          next()
+        }
+
+      }
     }
   ]
 })

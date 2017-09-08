@@ -32,10 +32,18 @@ firebase.initializeApp(config);
 window.firebase = firebase
 
 /* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  store,
-  template: '<App/>',
-  components: { App }
+const nonEnregistre = firebase.auth().onAuthStateChanged( user => {
+
+store.dispatch('setUser', user)
+
+  new Vue({
+    el: '#app',
+    router,
+    store,
+    template: '<App/>',
+    components: { App }
+  })
+
+nonEnregistre()
+
 })
