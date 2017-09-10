@@ -1,17 +1,20 @@
 <template>
 <div class="home">
   <sidebar></sidebar>
+  <notes></notes>
 </div>
 </template>
 
 <script>
 import Sidebar from './sidebar'
+import Notes from './Notes'
 
 export default {
   name: 'home',
 
   components: {
-    Sidebar
+    Sidebar,
+    Notes
   },
 
   data() {

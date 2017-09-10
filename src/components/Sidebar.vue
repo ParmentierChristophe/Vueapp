@@ -3,7 +3,7 @@
 <div class="columns profil">
 
 
-    <div class="column is-3">
+    <div class="column">
           <div class="card is-fullwidth">
 
             <div class="card-content">
@@ -34,7 +34,7 @@
 
             <div class="card-content">
               <form class="form-create-note" action="index.html" method="post">
-                <input type="text" name="" placeholder="Titre" value="">
+                <input class="title" type="text" name="" placeholder="Le titre" value="">
                 <textarea name="name" placeholder="Votre texte ici ..."></textarea>
                 <a class="button is-primary valid">
                 <span class="icon is-small">
@@ -87,6 +87,11 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.sidebar {
+  max-width: 400px;
+  display: inline-block;
+}
+
 .link{
   color:red;
   font-size: 14px;
