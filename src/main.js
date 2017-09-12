@@ -7,10 +7,13 @@ import firebase from 'firebase'
 import french from 'vee-validate/dist/locale/fr'
 import VeeValidate, { Validator } from 'vee-validate'
 import store from './store'
+import {VueMasonryPlugin} from 'vue-masonry';
 
 
 
 Vue.config.productionTip = false
+Vue.use(VueMasonryPlugin)
+
 
 Validator.addLocale(french);
 

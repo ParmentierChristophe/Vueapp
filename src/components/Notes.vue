@@ -135,7 +135,12 @@
 
 <script>
 export default {
-  name: 'notes'
+  name: 'notes',
+
+
+  mounted: function() {
+    this.$redrawVueMasonry();
+  }
 }
 </script>
 
@@ -145,7 +150,7 @@ export default {
 }
 .notes {
   display: inline-block;
-  width: 65%;
+  max-width: 70%;
 }
 
 .center-title {
@@ -156,7 +161,7 @@ export default {
   border-radius: 2px;
   box-shadow: 0 2px 5px #ccc;
   padding: 10px;
-  width: 280px;
+  width: 300px;
   margin: 16px;
   float: left;
 }

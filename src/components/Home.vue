@@ -29,6 +29,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
 .home {
   font-family: Open Sans, Helvetica, sans-serif;
   font-weight: 300;

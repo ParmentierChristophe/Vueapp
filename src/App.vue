@@ -11,6 +11,9 @@ export default {
 </script>
 
 <style>
+html {
+  overflow-y: auto !important;
+}
 body {
   font-family: Open Sans, Helvetica, sans-serif;
   font-weight: 300;
