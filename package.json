@@ -11,6 +11,7 @@
     "deploy": "node ./node_modules/vue-gh-pages/index.js"
   },
   "dependencies": {
+    "cloudinary-core": "^2.3.0",
     "firebase": "^4.3.0",
     "masonry-layout": "^4.2.0",
     "md5": "^2.2.1",
